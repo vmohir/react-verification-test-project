@@ -25,11 +25,25 @@ export default function VerificationChecks() {
     fetchAndDisplayCheckList();
   }, []);
 
+  function onAnswer(checkListItem: CheckListItem, index: number, answer: boolean) {
+    const newCheckList = checkList.map((c, i) => {
+      if (i === index) {
+        return { ...c, value: (answer ? 'Yes' : 'No') as CheckListItem['value'] };
+      }
+      return c;
+    });
+    setCheckList(newCheckList);
+  }
+
   return (
     <div>
       <ul className="verification-checks-list">
         {checkList.map((c, i) => (
-          <VerificationCheckItem checkItem={c} key={c.id} />
+          <VerificationCheckItem
+            checkItem={c}
+            key={c.id}
+            onAnswer={(answer: boolean) => onAnswer(c, i, answer)}
+          />
         ))}
       </ul>
     </div>
