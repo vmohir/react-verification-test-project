@@ -16,7 +16,7 @@ export const VerificationChecks: React.FC<Props> = ({ onSuccess, onError }) => {
   const checkItemsRef = useRef<Array<HTMLLIElement | null>>([]);
 
   function sortCheckList(checkListResponse: CheckListItem[]) {
-    return checkListResponse.sort((a, b) => b.priority - a.priority);
+    return checkListResponse.sort((a, b) => a.priority - b.priority);
   }
 
   function fetchAndDisplayCheckList() {
