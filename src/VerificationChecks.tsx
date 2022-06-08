@@ -1,10 +1,16 @@
 import React, { KeyboardEventHandler, useEffect, useRef, useState } from 'react';
 import { CheckListItem } from './models/check-list-item';
-import { fetchChecks } from './api';
+import { fetchChecks, submitCheckResults } from './api';
 import './VerificationChecks.scss';
 import VerificationCheckItem from './VerificationCheckItem';
+import Button from './Button';
 
-export default function VerificationChecks() {
+interface Props {
+  onSuccess: () => void;
+  onError: () => void;
+}
+
+export const VerificationChecks: React.FC<Props> = ({ onSuccess, onError }) => {
   const [checkList, setCheckList] = useState<CheckListItem[]>([]);
 
   const checkItemsRef = useRef<Array<HTMLLIElement | null>>([]);
@@ -20,12 +26,21 @@ export default function VerificationChecks() {
         setCheckList(sortedCheckList);
         checkItemsRef.current = checkItemsRef.current.slice(0, sortedCheckList.length);
       })
-      .catch(err => {
-        throw err;
+      .catch(error => {
+        console.error("Couldn't fetch data", error);
+        if (error.success === false) {
+          onError();
+          return;
+        }
+
+        throw error; // Unknown error
       });
   }
 
-  function isCheckItemEnabled(checkListItem: CheckListItem, index: number) {
+  function isCheckItemEnabled(
+    checkListItem: CheckListItem,
+    index: number,
+  ): checkListItem is Required<CheckListItem> {
     return checkList.every((c, i) => i >= index || c.value === 'Yes');
   }
 
@@ -62,8 +77,45 @@ export default function VerificationChecks() {
     }
   };
 
+  function onSubmit() {
+    if (isSubmitButtonDisabled()) return;
+
+    submitCheckResults(
+      checkList
+        .filter((c, i) => isCheckItemEnabled(c, i) && c.value != undefined)
+        .map(c => ({
+          checkId: c.id,
+          result: c.value!, // c.value is checked in the filter
+        })),
+    )
+      .then(() => onSuccess())
+      .catch(error => {
+        console.error("Couldn't submit data", error);
+        if (error.success === false) {
+          onError();
+          return;
+        }
+
+        throw error; // Unknown error
+      });
+  }
+
+  function isSubmitButtonDisabled(): boolean {
+    return (
+      checkList.reduce<boolean | undefined>((res, c) => {
+        if (res != undefined) return res;
+        return c.value === 'Yes' ? undefined : c.value === 'No';
+      }, undefined) === false
+    );
+  }
+
   return (
-    <div>
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        onSubmit();
+      }}
+    >
       <ul className="verification-checks-list" tabIndex={-1} onKeyDown={onKeyDown}>
         {checkList.map((c, i) => (
           <VerificationCheckItem
@@ -75,6 +127,14 @@ export default function VerificationChecks() {
           />
         ))}
       </ul>
-    </div>
+
+      <div className="d-flex justify-content-end">
+        <Button type="submit" disabled={isSubmitButtonDisabled()}>
+          SUBMIT
+        </Button>
+      </div>
+    </form>
   );
-}
+};
+
+export default VerificationChecks;

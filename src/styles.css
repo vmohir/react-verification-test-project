@@ -18,9 +18,38 @@ body {
   --disabled-text-color: #b6b9c0;
   --disabled-bg-color: #e6ebf4;
   --focus-outline-color: #a821a8;
+  --success: #4caf50;
+  --danger: #f44336;
 }
 
 .container {
   max-width: 1280px;
   margin: 0 auto;
+}
+
+.d-flex {
+  display: flex !important;
+}
+.justify-content-end {
+  justify-content: end !important;
+}
+
+.success {
+  color: var(--success) !important;
+}
+.danger {
+  color: var(--danger) !important;
+}
+
+.font-size-3 {
+  font-size: 3rem;
+}
+.font-size-2 {
+  font-size: 2rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.mb-3 {
+  margin-bottom: 1rem;
 }
