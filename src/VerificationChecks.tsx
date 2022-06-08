@@ -21,6 +21,10 @@ export default function VerificationChecks() {
       });
   }
 
+  function isCheckItemEnabled(checkListItem: CheckListItem, index: number) {
+    return checkList.every((c, i) => i >= index || c.value === 'Yes');
+  }
+
   useEffect(() => {
     fetchAndDisplayCheckList();
   }, []);
@@ -42,6 +46,7 @@ export default function VerificationChecks() {
           <VerificationCheckItem
             checkItem={c}
             key={c.id}
+            isEnabled={isCheckItemEnabled(c, i)}
             onAnswer={(answer: boolean) => onAnswer(c, i, answer)}
           />
         ))}
