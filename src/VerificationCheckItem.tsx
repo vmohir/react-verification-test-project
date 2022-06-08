@@ -1,5 +1,6 @@
 import React, { Fragment, KeyboardEventHandler, useState } from 'react';
 import { CheckListItem } from './models/check-list-item';
+import './VerificationCheckItem.scss';
 import ButtonToggle from './ButtonToggle';
 import PropTypes from 'prop-types';
 

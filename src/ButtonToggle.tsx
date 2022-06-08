@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './ButtonToggle.scss';
 import Button from './Button';
 
 interface props {

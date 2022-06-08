@@ -1,6 +1,7 @@
 import React, { KeyboardEventHandler, useEffect, useRef, useState } from 'react';
 import { CheckListItem } from './models/check-list-item';
 import { fetchChecks } from './api';
+import './VerificationChecks.scss';
 import VerificationCheckItem from './VerificationCheckItem';
 
 export default function VerificationChecks() {

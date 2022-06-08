@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import './Button.css';
+import './Button.scss';
 
 interface props extends ButtonHTMLAttributes<any> {
   children: ReactNode;

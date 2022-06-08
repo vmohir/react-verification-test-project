@@ -12,6 +12,12 @@ body {
 
   --primary-color: #004e5f;
   --highlight-color: #def7f7;
+  --check-item-hover-color: #e2e8f2;
+  --border-radius: 4px;
+  --white: #fff;
+  --disabled-text-color: #b6b9c0;
+  --disabled-bg-color: #e6ebf4;
+  --focus-outline-color: #a821a8;
 }
 
 .container {

@@ -1,0 +1,44 @@
+.button {
+  font-weight: 500;
+  font-size: 14px;
+  height: 36px;
+  line-height: 36px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  user-select: none;
+  border: 1px solid var(--button-border-color, var(--primary-color));
+  background-color: var(--button-bg-color, var(--primary-color));
+  color: var(--button-color, var(--white));
+
+  position: relative;
+  padding: 0 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    --button-bg-color: var(--disabled-bg-color);
+    --button-color: var(--disabled-text-color);
+    --button-border-color: var(--disabled-bg-color);
+  }
+
+  &:enabled:hover,
+  &:enabled:focus {
+    filter: brightness(110%);
+  }
+
+  &:focus {
+    outline: 2px solid var(--focus-outline-color);
+  }
+}
+
+.button-outlined {
+  --button-bg-color: var(--white);
+  --button-color: var(--primary-color);
+  --button-border-color: var(--primary-color);
+  &:disabled {
+    --button-bg-color: var(--white);
+    --button-color: var(--disabled-text-color);
+    --button-border-color: var(--disabled-bg-color);
+  }
+}
