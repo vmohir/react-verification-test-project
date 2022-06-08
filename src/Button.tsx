@@ -4,11 +4,12 @@ import './Button.css';
 
 interface props extends ButtonHTMLAttributes<any> {
   children: ReactNode;
+  className?: string;
 }
 
-const Button: React.FC<props> = ({ children, ...rest }) => {
+const Button: React.FC<props> = ({ children, className, ...rest }) => {
   return (
-    <button className="Button" {...rest}>
+    <button className={'button ' + className} {...rest}>
       {children}
     </button>
   );
@@ -16,6 +17,7 @@ const Button: React.FC<props> = ({ children, ...rest }) => {
 
 Button.propTypes = {
   children: PropTypes.string.isRequired,
+  className: PropTypes.string,
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['submit', 'button'] as const),
   onClick: PropTypes.func,
